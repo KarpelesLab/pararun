@@ -36,12 +36,15 @@ func TestForeach(t *testing.T) {
 
 	v = 0
 
-	pararun.ForEach(runner5, x, func(n int, n2 uint32) error {
+	err = pararun.ForEach(runner5, x, func(n int, n2 uint32) error {
 		atomic.AddUint32(&v, uint32(n))
 		return nil
 	})
 
 	if v != 2016 {
 		t.Errorf("expected v=2016, got v=%d", v)
+	}
+	if err != nil {
+		t.Errorf("failed to run foreach: %s", err)
 	}
 }

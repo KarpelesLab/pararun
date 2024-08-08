@@ -67,7 +67,7 @@ func ForEach[T any](r *Runner, data []T, cb func(int, T) error) error {
 	// if waitgroup completes, set cancel
 	go func() {
 		wg.Wait()
-		cancel(nil)
+		cancel(ErrTerminateForEach)
 	}()
 
 	go func() {
@@ -94,7 +94,11 @@ func ForEach[T any](r *Runner, data []T, cb func(int, T) error) error {
 
 	// wait for completion
 	<-ctx.Done()
-	return context.Cause(ctx)
+	err := context.Cause(ctx)
+	if err == ErrTerminateForEach {
+		return nil
+	}
+	return err
 }
 
 func (r *Runner) thread() {
