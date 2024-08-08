@@ -1,3 +1,5 @@
+[![GoDoc](https://godoc.org/github.com/KarpelesLab/pararun?status.svg)](https://godoc.org/github.com/KarpelesLab/pararun)
+
 # pararun
 
 Simple runner library for parallel operations with limits.
